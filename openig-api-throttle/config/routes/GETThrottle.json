@@ -26,7 +26,7 @@
 				{
 					"status": 500,
 					"reason": "Error",
-					"entity": "${read('./Dropbox/workspace/openig-widgets/html/thresholdBreachedResponse.html')}",
+					"entity": "${read('./Dropbox/workspace/openig_artifacts/openig-api-throttle/html/thresholdBreachedResponse.html')}",
 					"base": "http://openig.example.com:8082"
 				}
 			},

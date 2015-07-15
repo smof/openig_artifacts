@@ -21,7 +21,7 @@
 			{
 				"status": 500,
 				"reason": "Error",
-				"entity": "${read('./Dropbox/workspace/openig-widgets/html/noRouteResponse.html')}",
+				"entity": "${read('./Dropbox/workspace/openig_artifacts/openig-api-throttle/html/noRouteResponse.html')}",
 				"base": "http://openig.example.com:8082"
 			}
 		},
