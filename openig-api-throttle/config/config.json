@@ -1,0 +1,73 @@
+{
+	"handler": 
+	{
+		"name": "MainRouter",
+		"type": "Router",
+		"config": 
+		{
+			"audit": "global",
+			"capture": "all",
+			"defaultHandler" : "DefaultHandler"
+		}
+	},
+
+	"heap": 
+	[
+		{
+			"name": "DefaultHandler",
+			"type": "StaticResponseHandler",
+			"comment": "Default response HTML for when no route is found",
+			"config": 
+			{
+				"status": 500,
+				"reason": "Error",
+				"entity": "${read('./Dropbox/workspace/openig-widgets/html/noRouteResponse.html')}",
+				"base": "http://openig.example.com:8082"
+			}
+		},
+
+		{
+			"name": "Throttle",
+			"type": "ThrottlingFilter",
+			"config": 
+			{
+				"rate": 
+				{
+					"numberOfRequests": 3,
+					"duration": "10 seconds"
+				},
+
+				"_partitionKey": "${exchange.token}"
+			}
+		},
+
+		{
+			"name": "LogSink",
+			"type": "ConsoleLogSink",
+			"config": 
+			{
+				"level": "DEBUG"
+			}
+		},
+
+		{
+			"name": "JwtSession",
+			"type": "JwtSession"
+		},
+
+		{
+			"name": "ClientHandler",
+			"type": "ClientHandler"
+		},
+
+		{
+			"name": "capture",
+			"type": "CaptureDecorator",
+			"config": 
+			{
+				"captureEntity": true,
+				"_captureExchange": true
+			}
+		}
+	]
+}

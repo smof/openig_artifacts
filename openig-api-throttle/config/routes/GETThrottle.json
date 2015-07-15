@@ -1,0 +1,55 @@
+{
+	"heap": 
+	{
+		"objects": 
+		[
+			{
+				"name": "HandlerSwitch",
+				"type": "SwitchFilter",
+				"config": 
+				{
+					"onResponse": 
+					[
+						{
+							"condition": "${exchange.response.status.code == 429}",
+							"handler": "ThresholdBreachedHandler"
+						}
+					]
+				}
+			},
+
+			{
+				"name": "ThresholdBreachedHandler",
+				"type": "StaticResponseHandler",
+				"comment": "Response HTML for when throttle threshold is hit",
+				"config": 
+				{
+					"status": 500,
+					"reason": "Error",
+					"entity": "${read('./Dropbox/workspace/openig-widgets/html/thresholdBreachedResponse.html')}",
+					"base": "http://openig.example.com:8082"
+				}
+			},
+
+			{
+				"name": "ThrottleChain",
+				"type": "Chain",
+				"config": 
+				{
+					"filters": 
+					[
+						"HandlerSwitch",
+						"Throttle"
+					],
+
+					"handler": "ClientHandler"
+				}
+			}
+		]
+	},
+
+	"name": "GETThrottle",
+	"handler": "ThrottleChain",
+	"condition": "${(exchange.request.method == 'GET' && matches(exchange.request.uri.path, '/widget/[0-9][0-9]'))}",
+	"baseURI": "http://widgets.example.com:3001"
+}

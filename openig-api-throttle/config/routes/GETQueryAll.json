@@ -1,0 +1,14 @@
+{
+	"heap": 
+	{
+		"objects": 
+		[
+			
+		]
+	},
+
+	"name": "GETAll",
+	"handler": "ClientHandler",
+	"condition": "${(exchange.request.method == 'GET' && matches(exchange.request.uri.path, '/widget/queryAll'))}",
+	"baseURI": "http://widgets.example.com:3001"
+}
